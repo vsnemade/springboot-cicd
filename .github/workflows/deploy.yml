@@ -51,7 +51,7 @@ jobs:
              fi
 
              echo "Starting new Spring Boot app..."
-             cd ~/springboot-app
+             cd ~/springboot-app/target
              JAR_FILE=$(ls *.jar | head -n 1)
              echo "Running: $JAR_FILE"
              nohup java -jar "$JAR_FILE" >> /tmp/app.log 2>&1 &
