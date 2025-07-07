@@ -38,6 +38,5 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            pkill -f 'java -jar' || true >> /tmp/app.log 2>&1 &
-            nohup java -jar ~/springboot-app/target/*.jar >> /tmp/app.log 2>&1 &
+            pkill -f 'java -jar' || true
             
