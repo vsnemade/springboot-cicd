@@ -21,7 +21,7 @@ public class SpringBootCicd {
 
     @GetMapping("/")
     public String welcome(){
-        log.info("Dummy: Request received for '/'");
+        log.info("Request received for '/'");
         return "Welcome at "+LocalDateTime.now();
     }
 
