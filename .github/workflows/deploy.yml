@@ -39,22 +39,25 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             echo "Stopping old Spring Boot app..."
-            PIDS=$(ps -eo pid,cmd | grep '[j]ava -jar' | awk '{print $1}')
-            if [ -n "$PIDS" ]; then
-              echo "Found running PIDs: $PIDS"
-              echo "$PIDS" | xargs kill
-              sleep 2
-            else
-               echo "No running Java app found."
-            fi
-         
-            echo "Starting new Spring Boot app..."
-            cd ~/springboot-app
-            JAR_FILE=$(ls *.jar | head -n 1)
-            echo "Running: $JAR_FILE"
-            nohup java -jar "$JAR_FILE" >> /tmp/app.log 2>&1 &
-            sleep 2
-            exit 0
+
+             PIDS=$(ps -eo pid,cmd | grep '[j]ava -jar' | grep -v grep | awk '{print $1}')
+
+             if [ -n "$PIDS" ]; then
+               echo "Found running PIDs: $PIDS"
+               echo "$PIDS" | xargs -r kill || true
+               sleep 2
+             else
+                echo "No running Java app found."
+             fi
+
+             echo "Starting new Spring Boot app..."
+             cd ~/springboot-app
+             JAR_FILE=$(ls *.jar | head -n 1)
+             echo "Running: $JAR_FILE"
+             nohup java -jar "$JAR_FILE" >> /tmp/app.log 2>&1 &
+             sleep 2
+             exit 0
+
 
 
             
