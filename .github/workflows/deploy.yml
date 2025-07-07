@@ -38,6 +38,13 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            pkill -f 'java -jar' >> /tmp/app.log 2>&1 || true 
+            echo "Stopping old Spring Boot app..."
+            ps aux | grep '[j]ava -jar' | awk '{print $2}' | xargs -r kill -9
+            echo "Starting new Spring Boot app..."
+            cd ~/springboot-app
+            JAR_FILE=$(ls *.jar | head -n 1)
+            nohup java -jar "$JAR_FILE" >> /tmp/app.log 2>&1 &
+            sleep 2
+            exit 0
 
             
