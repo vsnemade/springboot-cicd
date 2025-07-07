@@ -39,4 +39,4 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             pkill -f 'java -jar' || true
-            nohup java -jar ~/springboot-app/*.jar > app.log 2>&1 &
+            nohup java -jar ~/springboot-app/target/*.jar > app.log 2>&1 &
